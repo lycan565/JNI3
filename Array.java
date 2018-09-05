@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Array{
 	
@@ -7,44 +8,114 @@ public class Array{
           System.loadLibrary("Array");
     }
 
-	public native void pass(int n1, int n2);
+	public native char[] passValue(int row, int column);
 	
 	
      public static void main(String[] args) {
 		 
-         Scanner scanner = new Scanner(System.in);
-         System.out.printf("Enter first number: ");
-         int num1 = scanner.nextInt();
+		 char array[];
+		 int arrayRow, arrayColumn, rowInput, columnInput;
 		 
-		
+         Scanner scanner = new Scanner(System.in);
+         System.out.print("\nEnter row number for 2D array: ");
+		 
+		 do {
+
+			try {
+				arrayRow = scanner.nextInt();
+				if ( arrayRow>= 0) break;
+
+			} catch (InputMismatchException e) {
+			} finally {
+				scanner.nextLine();
+			}
+
+			System.out.print("\nInput must be an integer more than or equals to 0!\nEnter row number for 2D array: ");
+		} while (true);
+		 
+		 
 		 Scanner scanner2 = new Scanner(System.in);
-         System.out.printf("Enter second number: ");
-         int num2 = scanner2.nextInt();
-		  
+         System.out.print("\nEnter column number for 2D array: ");
+		 
+		 do {
+
+			try {
+				arrayColumn = scanner2.nextInt();
+				if ( arrayRow>= 0) break;
+
+			} catch (InputMismatchException e) {
+			} finally {
+				scanner2.nextLine();
+			}
+
+			System.out.print("\nInput must be an integer more than or equals to 0!\nEnter column number for 2D array: ");
+		} while (true);
 		 
 		 Array ar = new Array();
-		 ar.pass(num1, num2);
+		 array = ar.passValue(arrayRow, arrayColumn);
 		 
+		 System.out.println("\nThe content of the array in Java: \n");
 		 
-		 
-		for (int i = 0; i<num1; i++) {
-			for (int j = 0; j<num2; j++) {
-				System.out.println("The 2D array contains: ");
+		 int arraySize = arrayRow * arrayColumn;
+		 int nextLine = arrayColumn - 1;
+		
+		for (int i = 0; i<arraySize; i++) {
+		
+			if(i % arrayColumn == 0 && i!=0){
+				
+				System.out.print("\n");
+				
 			}
+		
+			System.out.print(array[i]); 
+		 
 		}
 		
 		
-}
+		Scanner scanner3 = new Scanner(System.in);
+		System.out.print("\n\nEnter the specific element row index number to retrieve: ");
+	
+		do {
 
-//how to run (for me):
-//javac Array.java
-//javac -h . Array.java
-//x86_64-w64-mingw32-gcc -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o Array.dll Array.c
+				try {
+					rowInput = scanner3.nextInt();
+					if ( rowInput>= 0 && rowInput<arrayRow) break;
 
-//To do:
-//I pass the value to c file idk how to pass array back
-//Exception handling for when not number is entered
-//Up to u to do: Bonus will be given if student provide additional feature that is attractive and useful
+				} catch (InputMismatchException e) {
+				} finally {
+					scanner3.nextLine();
+				}
 
+				System.out.print("\nInput must be an integer more than or equals to 0 and less than or equals to the max row index number of the 2D array!\nEnter the specific element row index number to retrieve: ");
+			} while (true);
+		
+		Scanner scanner4 = new Scanner(System.in);
+		System.out.print("\nEnter the specific element column index number to retrieve: "); 
+		
+		do {
 
+				try {
+					columnInput = scanner4.nextInt();
+					if ( columnInput>= 0 && columnInput<arrayColumn) break;
+
+				} catch (InputMismatchException e) {
+				} finally {
+					scanner4.nextLine();
+				}
+
+				System.out.print("\nInput must be an integer more than or equals to 0 and less than or equals to the max column index number of the 2D array!\nEnter the specific element column index number to retrieve: ");
+			} while (true);
+		
+		
+		
+		int retrieveIndex = (rowInput * arrayColumn) + columnInput;
+		System.out.print("\nThe character at arr["+rowInput+","+columnInput+"] of the 2D Array in C and displayed in JAVA: "+array[retrieveIndex]+"\n");
+		
+		 scanner.close();
+		 scanner2.close();
+		 scanner3.close();
+		 scanner4.close();
+
+	}
+	
 }

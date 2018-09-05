@@ -9,10 +9,10 @@ extern "C" {
 #endif
 /*
  * Class:     Array
- * Method:    pass
- * Signature: (II)V
+ * Method:    passValue
+ * Signature: (II)[C
  */
-JNIEXPORT void JNICALL Java_Array_pass
+JNIEXPORT jcharArray JNICALL Java_Array_passValue
   (JNIEnv *, jobject, jint, jint);
 
 #ifdef __cplusplus

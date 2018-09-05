@@ -5,41 +5,56 @@
 #include "Array.h"
 
 
-//code got problem
-JNIEXPORT void JNICALL Java_Array_pass (JNIEnv *env, jobject jobj, jint n1, jint n2) {
-	jint num1, num2;
-	int i, j;
-	//srand(time(NULL));
-	int randomnum = rand();
+JNIEXPORT jcharArray JNICALL Java_Array_passValue (JNIEnv *env, jobject jobj, jint row, jint column) {
+	
+	int index = 0;
+	srand(time(NULL));
 	char randomletter;
-	num1 = ((jint)n1);
-	num2 = ((jint)n2);
 	
 	
-	// char randomletter = 'A' + rand() % 26;
-	// printf("%c", randomletter);
+ 	jchar arr[row][column];
 	
-	
- 	jchar arr[num1][num2];
-	
-	for (i = 0; i<num1; i++) {
-		for (j = 0; j<num2; j++) {
+	for (int i = 0; i<row; i++) {
+		for (int j = 0; j<column; j++) {
 			
 			randomletter = 'A' + rand() % 26;
 			arr[i][j] = randomletter;
 		}
 	}    
 
-	for (i = 0; i<num1; i++) {
-		for (j = 0; j<num2; j++) {
+	//For showing the content of 2D array with random A-Z character in C file
+	printf("\nThe content of 2D array in C: \n\n");
+	
+	for (int i = 0; i<row; i++) {
+		for (int j = 0; j<column; j++) {
 			
 			printf("%c", arr[i][j]);
-	 }
-}   
+		}	
+		
+		printf("\n");
+		
+	}   
 	
-
-
-// return arr; 
-
-
+	
+	jcharArray CArray;
+	
+	int length = row * column;
+	CArray = (*env)->NewCharArray(env, length);
+	
+	if (CArray == NULL) {
+		return NULL;
+	}
+	
+	
+	for(int i=0; i<row; i++)
+	{
+		for(int j = 0; j<column; j++)
+		{
+			(*env)->SetCharArrayRegion(env, CArray, index, column, arr[i]);
+		}
+		index+=column;
+	}
+	
+	return CArray;
+	
 }
