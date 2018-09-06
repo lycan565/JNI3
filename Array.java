@@ -41,7 +41,7 @@ public class Array{
 
 			try {
 				arrayColumn = scanner2.nextInt();
-				if ( arrayRow>= 0) break;
+				if ( arrayColumn>= 0) break;
 
 			} catch (InputMismatchException e) {
 			} finally {
